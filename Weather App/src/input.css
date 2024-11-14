@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base {
+    /* Enable smooth scrolling for the entire document */
+    html {
+      scroll-behavior: smooth;
+    }
+  
+    /* Width of the scrollbar */
+    ::-webkit-scrollbar {
+      @apply h-1;
+    }
+  
+    /* Track of the scrollbar */
+    ::-webkit-scrollbar-track {
+      @apply bg-transparent;
+    }
+  
+    /* Handle of the scrollbar */
+    ::-webkit-scrollbar-thumb {
+      @apply bg-gray-500 rounded-sm;
+  
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      @apply bg-indigo-500;
+    }
+  }
+}
