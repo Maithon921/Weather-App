@@ -22,7 +22,10 @@ document
   .addEventListener("click", () => (dropdown.style.display = "none"));
 // function to take out date based on the data recieved from api
 function formatDate(dateString) {
+  // convert the numbers to date object
   const date = new Date(dateString);
+  // return the year month and date taken out from number converted to date object 
+  // pad to add 0 when there is single number, adding 1 to month as js months count start from 0
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
     2,
     "0"
@@ -71,8 +74,8 @@ async function showPosition(position) {
     displayBox.style.display = "block";
     document.querySelector("#errBox").style.display = "none";
 
-    //calling function which will collect and display data forecast of 5 days
-    positionForecast();
+    //calling function which will fetch and display data forecast of 5 days
+    locationForcast(latitude, longitude);
     // hide the dropdown if it is shown
     dropdown.style.display = "none";
 
@@ -98,26 +101,15 @@ function showError(error) {
       break;
   }
 }
-// function to collect data and display 5 days forecast
-function positionForecast() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(locationForcast, showError);
-  } else {
-    alert("Geolocation not supported by browser");
-  }
-}
 
-// function to fetch data from api and display data
-async function locationForcast(position) {
+// function to fetch data from api and display 5 days data
+async function locationForcast(latitude, longitude) {
   try {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-
     const locationData = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`
     );
     const reply = await locationData.json();
-
+    // filling up data according to the api to display
     // 1st day forecast
 
     document.querySelector("#day1Date").innerHTML = formatDate(
